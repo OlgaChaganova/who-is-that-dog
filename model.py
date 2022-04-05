@@ -34,17 +34,17 @@ class DogClassifierModel:
                                              nn.Dropout(p=0.4, inplace=True),
                                              nn.Linear(in_features=1792, out_features=n_classes, bias=True)
                                              )
-        checkpoint = torch.load('model2.tr', map_location=DEVICE)
+        checkpoint = torch.load(config['model_name'], map_location=DEVICE)
         self.model.load_state_dict(checkpoint['model_state_dict'])
 
         self.label_encoder = preprocessing.LabelEncoder()
-        self.label_encoder.classes_ = np.load('classes.npy', allow_pickle=True)
+        self.label_encoder.classes_ = np.load(config['encoder_labels'], allow_pickle=True)
         print("Model is ready!")
 
     def predict(self, image_path):
         self.model.eval()
         img = ImagesDataset.load_sample(image_path)
-        img = ImagesDataset.transform(img, config['SIZE']).unsqueeze(0)
+        img = ImagesDataset.transform(img, config['img_size']).unsqueeze(0)
         img = img.to(DEVICE)
 
         res = self.model(img)

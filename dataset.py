@@ -54,8 +54,8 @@ class ImagesDataset(Dataset):
         return img
 
     def __getitem__(self, index):
-        img = self.load_sample(config['PATH'] + self.df.loc[index, 'path'])
+        img = self.load_sample(config['common_path'] + self.df.loc[index, 'path'])
         label = self.df.loc[index, self.labels_col]
         label = self.encoder.transform(np.array([label]))
-        img = self.transform(img, config['SIZE'])
+        img = self.transform(img, config['img_size'])
         return img, label

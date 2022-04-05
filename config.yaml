@@ -1,2 +1,4 @@
-SIZE: 360
-PATH: '.\'
+img_size: 360
+common_path: '.\'
+model_name: 'model2.tr'
+encoder_labels: 'classes.npy'
